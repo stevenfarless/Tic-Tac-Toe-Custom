@@ -6,7 +6,7 @@ Tic-Tac-Toe (Custom) is a classic Tic-Tac-Toe game with a twist: players can cus
 
 ## Play it!
 
-Currently hosted at [customtictactoe.w3spaces.com](customtictactoe.w3spaces.com)
+Currently hosted at [https://customtictactoe.w3spaces.com](https://customtictactoe.w3spaces.com/)
 
 ![image](https://github.com/user-attachments/assets/c5be143e-c540-4c20-be29-37ed7bcad573)
 
