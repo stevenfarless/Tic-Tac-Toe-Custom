@@ -1,2 +1,24 @@
-# Tic-Tac-Toe-Custom
-A customizable Tic-Tac-Toe game where players can enter their initials, emojis, or symbols. The game has a simple and interface. Players can reset the game at any time, and the game will automatically handle turns and declare winners or draws. Built using HTML, CSS, and JavaScript.
+# Tic-Tac-Toe (Custom)
+
+## Description
+
+Tic-Tac-Toe (Custom) is a classic Tic-Tac-Toe game with a twist: players can customize their game by entering names or emojis for Player 1 and Player 2. The game features a clean and responsive design, making it easy to play on various devices. It includes functionality for handling player turns, detecting winners or draws, and resetting the game.
+
+## Features
+
+- Customizable player names or emojis
+- Simple and intuitive user interface
+- Responsive design for various devices
+- Turn-based gameplay
+- Automatic detection of winners or draws
+- Reset game functionality
+
+### Gameplay
+- Click on the cells of the game board to make a move.
+- The game will automatically switch turns between Player 1 and Player 2.
+- The result will be displayed when there is a winner or a draw.
+- Use the "Reset Game" button to start a new game.
+
+## Contributing
+
+Feel free to fork the repository and submit pull requests. Contributions to improve the game or add new features are welcome!
