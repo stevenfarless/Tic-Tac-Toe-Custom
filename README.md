@@ -4,7 +4,9 @@
 
 Tic-Tac-Toe (Custom) is a classic Tic-Tac-Toe game with a twist: players can customize their game by entering names or emojis for Player 1 and Player 2. The game features a clean and responsive design, making it easy to play on various devices. It includes functionality for handling player turns, detecting winners or draws, and resetting the game.
 
-Playable at [codepen](https://codepen.io/Fuddledumpy/pen/OJeQrmP)
+## Play it!
+
+Currently hosted at [customtictactoe.w3spaces.com](customtictactoe.w3spaces.com)
 
 ![image](https://github.com/user-attachments/assets/c5be143e-c540-4c20-be29-37ed7bcad573)
 
