@@ -30,6 +30,12 @@ input[type="text"] {
   color: #f8f8f2;
   font-size: 20px;
   text-align: center;
+  transition: border-color 0.3s ease, transform 0.1s ease;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  transform: scale(1.02);
 }
 
 input[type="text"]::placeholder {
@@ -54,12 +60,22 @@ input[type="text"]::placeholder {
   font-size: 60px;
   cursor: pointer;
   color: #f8f8f2;
+  transition: background-color 0.2s ease;
+  user-select: none;
+}
+
+.cell:hover {
+  background-color: #6272a4;
 }
 
 #result {
   margin-top: 20px;
   font-size: 20px;
   color: #f8f8f2;
+  font-weight: bold;
+  text-align: center;
+  min-height: 28px;
+  transition: color 0.3s ease;
 }
 
 #reset {
@@ -71,8 +87,39 @@ input[type="text"]::placeholder {
   color: #282a36;
   cursor: pointer;
   font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
 #reset:hover {
   background-color: #f1fa8c;
+  transform: scale(1.05);
+}
+
+#reset:active {
+  transform: scale(0.98);
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
 }
