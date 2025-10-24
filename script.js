@@ -1,59 +1,91 @@
 const playerOneInput = document.querySelector("#playerOneInput");
 const playerTwoInput = document.querySelector("#playerTwoInput");
-const board = document.querySelector("#board");
 const cells = document.querySelectorAll(".cell");
 const result = document.querySelector("#result");
 const resetButton = document.querySelector("#reset");
 
 let playerOne = "";
 let playerTwo = "";
-let currentPlayer = playerOne;
+let currentPlayer = "";
 let gameBoard = ["", "", "", "", "", "", "", "", ""];
-let gameActive = true;
+let gameActive = false;
+let moveCount = 0;
 
-playerOneInput.value = playerOne;
-playerTwoInput.value = playerTwo;
+function updateGameStatus() {
+  if (!playerOne || !playerTwo) {
+    result.textContent = "Enter both player names to start";
+    result.style.color = "#f8f8f2";
+    gameActive = false;
+  } else if (playerOne === playerTwo) {
+    result.textContent = "Players must use different symbols";
+    result.style.color = "#ff5555";
+    gameActive = false;
+  } else {
+    if (!currentPlayer) {
+      currentPlayer = playerOne;
+    }
+    result.textContent = `${currentPlayer}'s turn`;
+    result.style.color = "#50fa7b";
+    gameActive = true;
+    highlightCurrentPlayer();
+  }
+}
+
+function highlightCurrentPlayer() {
+  playerOneInput.style.borderColor = currentPlayer === playerOne ? "#50fa7b" : "#39959f";
+  playerTwoInput.style.borderColor = currentPlayer === playerTwo ? "#50fa7b" : "#39959f";
+}
 
 function handleCellClick(event) {
-  const cellIndex = Array.from(cells).indexOf(event.target);
+  if (!gameActive) {
+    // Shake the result message if game isn't active
+    result.style.animation = "none";
+    setTimeout(() => { result.style.animation = "shake 0.3s"; }, 10);
+    return;
+  }
+  
+  const cellIndex = parseInt(event.target.id) - 1;
 
-  if (gameActive && gameBoard[cellIndex] === "") {
+  if (gameBoard[cellIndex] === "") {
     gameBoard[cellIndex] = currentPlayer;
     event.target.textContent = currentPlayer;
+    event.target.style.animation = "pop 0.3s";
+    moveCount++;
 
     const winner = checkWinner();
     if (winner) {
-      result.textContent = `${winner} wins!`;
+      result.textContent = `🎉 ${winner} wins!`;
+      result.style.color = "#f1fa8c";
       gameActive = false;
-    } else if (gameBoard.every((cell) => cell !== "")) {
-      result.textContent = `It's a draw!`;
+      playerOneInput.style.borderColor = "#39959f";
+      playerTwoInput.style.borderColor = "#39959f";
+    } else if (moveCount === 9) {
+      result.textContent = "It's a draw!";
+      result.style.color = "#bd93f9";
       gameActive = false;
+      playerOneInput.style.borderColor = "#39959f";
+      playerTwoInput.style.borderColor = "#39959f";
     } else {
       currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne;
       result.textContent = `${currentPlayer}'s turn`;
+      highlightCurrentPlayer();
     }
+  } else {
+    // Shake the cell if already occupied
+    event.target.style.animation = "none";
+    setTimeout(() => { event.target.style.animation = "shake 0.3s"; }, 10);
   }
 }
 
 function checkWinner() {
   const winConditions = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
+    [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
+    [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
+    [0, 4, 8], [2, 4, 6]              // diagonals
   ];
 
-  for (let i = 0; i < winConditions.length; i++) {
-    const [a, b, c] = winConditions[i];
-    if (
-      gameBoard[a] &&
-      gameBoard[a] === gameBoard[b] &&
-      gameBoard[a] === gameBoard[c]
-    ) {
+  for (const [a, b, c] of winConditions) {
+    if (gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
       return gameBoard[a];
     }
   }
@@ -61,41 +93,35 @@ function checkWinner() {
 }
 
 function resetGame() {
-  // Clear the player name input fields
-  // playerOneInput.value = "";
-  // playerTwoInput.value = "";
-
-  // Reset player name variables to empty strings
+  playerOneInput.value = "";
+  playerTwoInput.value = "";
   playerOne = "";
   playerTwo = "";
-
-  // Set the current player to an empty string
   currentPlayer = "";
-
-  // Clear the game board
   gameBoard = ["", "", "", "", "", "", "", "", ""];
-  gameActive = true;
+  gameActive = false;
+  moveCount = 0;
 
-  // Clear the cell contents
   cells.forEach((cell) => {
     cell.textContent = "";
+    cell.style.animation = "none";
   });
 
-  // Reset the result message
-  result.textContent = "";
+  playerOneInput.style.borderColor = "#39959f";
+  playerTwoInput.style.borderColor = "#39959f";
+  result.textContent = "Enter both player names to start";
+  result.style.color = "#f8f8f2";
+  result.style.animation = "none";
 }
 
 playerOneInput.addEventListener("input", () => {
-  playerOne = playerOneInput.value || "";
-  currentPlayer = playerOne;
-  result.textContent = `${currentPlayer}'s turn`;
+  playerOne = playerOneInput.value.trim();
+  updateGameStatus();
 });
 
 playerTwoInput.addEventListener("input", () => {
-  playerTwo = playerTwoInput.value || "";
-  if (currentPlayer === playerTwo) {
-    result.textContent = `${currentPlayer}'s turn`;
-  }
+  playerTwo = playerTwoInput.value.trim();
+  updateGameStatus();
 });
 
 cells.forEach((cell) => {
@@ -104,5 +130,5 @@ cells.forEach((cell) => {
 
 resetButton.addEventListener("click", resetGame);
 
-// Set the initial game state
-result.textContent = `${currentPlayer}'s turn`;
+// Initialize
+updateGameStatus();
